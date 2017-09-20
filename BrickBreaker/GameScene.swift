@@ -18,17 +18,25 @@ enum NodeName : String {
         return nodeName.rawValue
     }
 }
+
+let BallCategoryBitMask: UInt32 = 0x1 << 0
+let BottomCategoryBitMask: UInt32 = 0x1 << 1
+let BrickCategoryBitMask: UInt32 = 0x1 << 2
+let PaddleCategoryBitMask: UInt32 = 0x1 << 3
+let BorderCategoryBitMask: UInt32 = 0x1 << 4
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var ball: SKSpriteNode?
     private var paddle: SKSpriteNode?
     var isPaddleTouched = false
-    
+
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        
+    
         self.ball = childNode(withName: NodeName.string(from: .ball)) as? SKSpriteNode
         self.paddle = childNode(withName: NodeName.string(from: .paddle)) as? SKSpriteNode
+        
         
         let borderPhysicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         borderPhysicsBody.isDynamic = false
@@ -41,8 +49,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         borderPhysicsBody.angularDamping = 0.0
         physicsBody = borderPhysicsBody
         
-        physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
-        ball?.physicsBody?.applyImpulse(CGVector(dx: 2.0, dy: -2.0))
+        physicsWorld.contactDelegate = self
+
         let bottom = SKNode()
         bottom.physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: 0), to: CGPoint(x: frame.width, y: 0.0))
         bottom.physicsBody?.categoryBitMask = BottomCategoryBitMask
@@ -55,9 +63,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball?.physicsBody?.contactTestBitMask = BrickCategoryBitMask | BottomCategoryBitMask
         
         setupBricks()
+        
+        ball?.physicsBody?.applyImpulse(CGVector(dx: 2.0, dy: -2.0))
+        
     }
-    
-    //MARK: - Touches
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
@@ -78,10 +87,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             guard let paddle = paddle else { return }
             
             var paddleX = paddle.position.x + (touchLocation.x - previousLocation.x)
-            let width = frame.size.width
-            print(paddleX)
-            print("width: \(width)")
-            
             paddleX = max(paddleX, paddle.size.width/2.0)
             paddleX = min(paddleX, size.width - paddle.size.width/2.0)
             
@@ -92,16 +97,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         isPaddleTouched = false
     }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
-    
-    // MARK: - Bricks
     
     func setupBricks() {
         let numberOfBricks = 8
@@ -120,7 +115,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             brick.physicsBody?.friction = 0.0
             brick.physicsBody?.affectedByGravity = false
             brick.physicsBody?.isDynamic = false
+            brick.physicsBody?.categoryBitMask = BrickCategoryBitMask
             addChild(brick)
         }
     }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        if firstBody.categoryBitMask == BallCategoryBitMask {
+            switch secondBody.categoryBitMask {
+            case BottomCategoryBitMask:
+                print("Hit Bottom")
+            case BrickCategoryBitMask:
+                breakBrick(node: secondBody.node)
+            default:
+                return
+            }
+        }
+    }
+    
+    func breakBrick(node: SKNode?) {
+        guard let node = node,
+            let particles = SKEmitterNode(fileNamed: "Shatter") else { return }
+        particles.position = node.position
+        particles.zPosition = 3
+        addChild(particles)
+        let action = SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.removeFromParent()])
+        particles.run(action)
+        node.removeFromParent()
+    }
+
 }

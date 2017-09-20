@@ -14,6 +14,7 @@
 		015E2ED21EA7E9A400FABEBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 015E2ED01EA7E9A400FABEBF /* Main.storyboard */; };
 		015E2ED41EA7E9A400FABEBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 015E2ED31EA7E9A400FABEBF /* Assets.xcassets */; };
 		015E2ED71EA7E9A400FABEBF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 015E2ED51EA7E9A400FABEBF /* LaunchScreen.storyboard */; };
+		016ABB181EA804CC00844D3B /* Shatter.sks in Resources */ = {isa = PBXBuildFile; fileRef = 016ABB171EA804CC00844D3B /* Shatter.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		015E2ED31EA7E9A400FABEBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		015E2ED61EA7E9A400FABEBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		015E2ED81EA7E9A400FABEBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		016ABB171EA804CC00844D3B /* Shatter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Shatter.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				015E2ECE1EA7E9A400FABEBF /* GameViewController.swift */,
 				015E2ED01EA7E9A400FABEBF /* Main.storyboard */,
 				015E2ED31EA7E9A400FABEBF /* Assets.xcassets */,
+				016ABB171EA804CC00844D3B /* Shatter.sks */,
 				015E2ED51EA7E9A400FABEBF /* LaunchScreen.storyboard */,
 				015E2ED81EA7E9A400FABEBF /* Info.plist */,
 			);
@@ -102,6 +105,7 @@
 				TargetAttributes = {
 					015E2EC21EA7E9A400FABEBF = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = B9KMJ3NRM7;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -129,6 +133,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				016ABB181EA804CC00844D3B /* Shatter.sks in Resources */,
 				015E2ED21EA7E9A400FABEBF /* Main.storyboard in Resources */,
 				015E2EC91EA7E9A400FABEBF /* GameScene.sks in Resources */,
 				015E2ED41EA7E9A400FABEBF /* Assets.xcassets in Resources */,
@@ -268,12 +273,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = B9KMJ3NRM7;
 				INFOPLIST_FILE = BrickBreaker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.MottApplications.BrickBreaker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -281,12 +287,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = B9KMJ3NRM7;
 				INFOPLIST_FILE = BrickBreaker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.MottApplications.BrickBreaker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
